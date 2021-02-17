@@ -1,22 +1,9 @@
+import { usePosts } from "hooks/usePosts"
 import { NextPage } from "next"
-import React, { memo, useEffect, useState } from "react"
-import fly from "flyio"
-
-type Post = {
-  id: number
-  title: string
-  name: string
-}
+import React, { memo } from "react"
 
 const Index: NextPage = (props) => {
-  const [posts, setPosts] = useState<Array<Post>>([])
-  const mounted = async () => {
-    const { data } = await fly.get("/api/v1/posts")
-    setPosts(data)
-  }
-  useEffect(() => {
-    mounted()
-  }, [])
+  const { posts } = usePosts()
   return (
     <>
       {posts.map(({ title, id }) => {
